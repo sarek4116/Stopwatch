@@ -1,26 +1,21 @@
 {
-  "name": "stopwatch",
+  "name": "asd",
   "version": "1.0.0",
   "description": "",
-  "main": "script.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "babel script.js --watch --out-file script-compiled.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sarek4116/Stopwatch.git"
-  },
+  "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/sarek4116/Stopwatch/issues"
-  },
-  "homepage": "https://github.com/sarek4116/Stopwatch#readme",
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-latest": "^6.24.1",
-    "eslint": "^6.0.1",
-    "eslint-plugin-react": "^7.14.2"
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.4.0",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5"
   }
 }
