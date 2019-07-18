@@ -6,47 +6,53 @@ class Stopwatch extends React.Component {
             running:false,
             minutes:0,
             seconds:0,
-            miliseconds:0
+            miliseconds:0,
+            time: []
         }
     }
 
-    reset() {
+    reset = () => {
         this.setState ({
             minutes: 0,
             seconds: 0,
-            miliseconds: 0
+            miliseconds: 0,
         });
     }
 
-    addResult() {
-        const results = document.querySelector('.results');
-        const newLi = document.createElement('li');
-        newLi.innerHTML = this.format(this.times);
-        results.appendChild(newLi);
+    addResult = () => {
+        const timeAdd = this.format();
+            this.setState({time: [...this.state.time,timeAdd] });
+            console.log(this.state.time)
     }
 
-    clearResult() {
-        const results = document.querySelector('.results');
-        results.innerHTML = '';
+    clearResult = () => {
+        this.setState({ time: [] })
     }
 
-    format(times) {
-        return `${pad0(times.minutes)}:${pad0(times.seconds)}:${pad0(Math.floor(times.miliseconds))}`;
+    format = () => {
+        function pad0(value) {
+            let result = value.toString();
+            if (result.length < 2) {
+                result = '0' + result;
+            }
+            return result;
+        }        
+        return `${pad0(this.state.minutes)}:${pad0(this.state.seconds)}:${pad0(Math.floor(this.state.miliseconds))}`;
     }
 
-    start() {
+    start = () => {
         if (!this.state.running) {
             this.state.running = true;
             this.watch = setInterval(() => this.step(), 10);
         }
     }
 
-    step() {
+    step = () => {
         if (!this.state.running) return;
         this.calculate();
     }
 
-    calculate () {
+    calculate = () => {
         let miliseconds = this.state.miliseconds + 1,
             seconds = this.state.seconds,
             minutes = this.state.minutes;
@@ -66,7 +72,7 @@ class Stopwatch extends React.Component {
         });
     };
 
-    stop() {
+    stop = () => {
         this.setState ({
             running: false
         });
@@ -74,6 +80,12 @@ class Stopwatch extends React.Component {
     }
 
     render() {
+
+        const timeResults = this.state.time.map(item => {
+            return <li key={item}>{item}</li>;
+          });
+        
+
         return (
         <div className={'wrapper'}>
 
@@ -81,7 +93,7 @@ class Stopwatch extends React.Component {
                 <a href="#" onClick={() => {this.start()} }>Start</a>
                 <a href="#" onClick={() => {this.stop()} }>Stop</a>
                 <a href="#" onClick={() => {this.reset()} }>Restart</a>
-                <a href="#" onClick={() => {stopwatch.clearResult()} }>Clear Result</a>
+                <a href="#" onClick={() => {this.clearResult()} }>Clear Result</a>
                 <a href="#" onClick={() => {this.addResult()} }>Add Result</a>
             </nav>
 
@@ -94,6 +106,7 @@ class Stopwatch extends React.Component {
             </div>
             
             <ul className={'results'}>
+                    {timeResults}
             </ul>
 
         </div>
@@ -102,13 +115,6 @@ class Stopwatch extends React.Component {
             }
         }
 
-function pad0(value) {
-    let result = value.toString();
-    if (result.length < 2) {
-        result = '0' + result;
-    }
-    return result;
-}
 
 const app = React.createElement(Stopwatch);
 ReactDOM.render(app,document.getElementById('app'))
